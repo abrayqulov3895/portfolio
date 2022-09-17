@@ -1,0 +1,153 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}{% endblock title %}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Start Include All CSS -->
+        <link rel="stylesheet" href="{% static 'assets/css/bootstrap.css' %}"/>
+        <link rel="stylesheet" href="{% static 'assets/css/animate.css' %}"/>
+        <link rel="stylesheet" href="{% static 'assets/css/stroke-gap-icons.css' %}"/>
+        <link rel="stylesheet" href="{% static 'assets/css/icofont.css' %}"/>
+        <link rel="stylesheet" href="{% static 'assets/css/flaticon.css' %}"/>
+        <link rel="stylesheet" href="{% static 'assets/css/Interest.css' %}"/>
+        <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}"/>
+        <link rel="stylesheet" href="{% static 'assets/css/owl.theme.default.min.css' %}"/>
+        <link rel="stylesheet" href="{% static 'assets/css/lightslider.css' %}"/>
+        <link rel="stylesheet" href="{% static 'assets/css/jquery.mCustomScrollbar.css' %}"/>
+        
+        <link rel="stylesheet" href="{% static 'assets/css/preset.css' %}"/>
+        <link rel="stylesheet" href="{% static 'assets/css/ignore_for_wp.css' %}"/>
+        <link rel="stylesheet" href="{% static 'assets/css/theme.css' %}"/>
+        <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}"/>
+        <link rel="stylesheet" href="{% static 'assets/css/light.css' %}"/>
+        <!-- End Include All CSS -->
+
+        <!-- Favicon Icon -->
+        <link rel="icon"  type="image/png" href="{% static 'assets/images/favicon.png' %}"/>
+        <!-- Favicon Icon -->
+    </head>
+    <body class="dark">
+        
+        <!-- Preloader Start -->
+        <div class="preloader">
+            <div class="preloader-inner">
+                <div class="preloader-box">
+                    <div class="letter">L</div>
+                    <div class="letter">O</div>
+                    <div class="letter">A</div>
+                    <div class="letter">D</div>
+                    <div class="letter">I</div>
+                    <div class="letter">N</div>
+                    <div class="letter">G</div>
+                </div>
+            </div>
+        </div>
+        <!-- Preloader End --> 
+        
+        {% block content %}{% endblock content %}
+        
+        
+        <!-- Bact To Top -->
+        <a href="javascript:void(0);" id="backtotop"><i class="icofont-bubble-up"></i></a>
+        <!-- Bact To Top -->
+
+        <!-- Start Include All JS -->
+        <script src="{% static 'assets/js/jquery.js' %}"></script>
+        <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.appear.js' %}"></script>
+        <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+        <script src="{% static '' %}"></script>
+        <script src="{% static 'assets/js/lightslider.min.js' %}"></script>
+        <script src="https://maps.google.com/maps/api/js?key=AIzaSyBJtPMZ_LWZKuHTLq5o08KSncQufIhPU3o"></script>
+        <script src="{% static 'assets/js/gmaps.js' %}"></script>
+        <script src="{% static 'assets/js/anime.min.js' %}"></script>
+        <script src="{% static 'assets/js/folio.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+        
+        <script src="{% static 'assets/js/theme.js' %}"></script>
+        <script>
+            $("#contact").submit(function contact(x) {
+                console.log('Contact button clicked');
+                let serializedData = $(this).serialize();
+                console.log(serializedData);
+                $.ajax({
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRFToken": '{{ csrf_token }}',
+                      },
+                    type: 'GET',
+                    url: '',
+                    contentType: 'application/json',
+                    {% comment %} data: `{'csrfmiddlewaretoken': '{{ csrf_token }}', 'name':${$('#name').val()}, 'email':${$('#email').val()},'message':${$('#message').val()}}`, {% endcomment %}
+                    data: serializedData,
+                    dataType: 'json',
+                    success: (data) => {
+                        if(data.result==true){
+                            document.getElementById("contact").reset();
+                            document.getElementById("messageM").innerHTML=data.message;
+                            document.getElementById("messageBlock").style.display='block';
+    
+                        }
+                   
+                    },
+                    error: (error) => {
+                        console.log(error);
+                        console.log('Error');
+                    }
+                });
+                return false;
+            
+            })
+    
+            function myFunction(x) {
+                let choice = null;
+                if (x.className == 'fa fa-thumbs-up'){
+                    
+                    choice = true;
+                
+                }
+                else{
+                    choice = false;
+                } 
+                
+                
+                $.ajax({
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRFToken": '{{ csrf_token }}',
+                      },
+                    type: 'POST',
+                    url: '',
+                    contentType: 'application/json',
+                    data: `{'csrfmiddlewaretoken': '{{ csrf_token }}', 'choice':${choice}}`,
+                    dataType: 'json',
+                    success: (data) => {
+                        console.log(data.like);
+                        if (data.like ==true){
+                            x.className="fa fa-thumbs-up";
+                            x.style.color = 'blue';
+                        }
+                        else if(data.like ==false){
+                            x.className = "fa fa-thumbs-down";
+                            x.style.color = 'red';
+                        } 
+                        else if(data.like ==null){
+                            x.className = "fa fa-thumbs-down";
+                            x.style.color = '#ccc';
+                        } 
+                    },
+                    error: (error) => {
+                        console.log(error);
+                        console.log('Error');
+                    }
+                });
+                return false;
+            
+            }
+        </script>
+        <!-- End Include All JS -->
+    </body>
+</html>

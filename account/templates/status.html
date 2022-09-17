@@ -1,0 +1,60 @@
+{% load static %}
+<div class="col-lg-4 profileColumn">
+    
+    <div class="profileSidebar">
+        {% for information in informations %}
+        <div class="psHeader">
+            <svg preserveAspectRatio="none" viewBox="0 0 100 100">
+                <polygon points="0 20, 100 20, 0 100" opacity=".65"></polygon>
+            </svg>
+            <svg class="svg2" preserveAspectRatio="none" viewBox="0 0 100 120">
+                <polygon points="0 20, 100 20, 15 120" opacity=".8"></polygon>
+            </svg>
+            <div class="psContent">
+                <h3>{{information.last_name}} {{information.first_name}} {{information.middle_name}}</h3>
+                <span>Sr. Developer</span>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="psPhoto">
+            {% for information in informations %}
+            <img style="width:321px; height:450px" src="{{information.image.url}}" alt=""/>
+            {% endfor %}
+            {% for iconinformation in iconinformations %}
+            <div class="psSocial">
+                <a href="{{iconinformation.link_name.url}}" target="_blank" class="{{iconinformation.font_color}}"><i class="{{iconinformation.icon}}"></i></a>
+                <a href="https://twitter.com" target="_blank" class="twi"><i class="icofont-twitter"></i></a>
+                <a href="https://dribbble.com/" target="_blank" class="dri"><i class="icofont-dribbble"></i></a>
+                <a href="https://www.instagram.com/" target="_blank" class="ins"><i class="icofont-instagram"></i></a>
+                <a href="https://www.instagram.com/" target="_blank" class="tel"><i class="icofont-telegram"></i></a>
+
+            </div>
+            {% endfor %}
+         
+        </div>
+        <div class="psSkills">
+            {% for specialistinformation in specialistinformations  %}
+            <div class="pssBox" data-count="85">
+                <div class="pssbCount">85.</div>
+                <h5>{{specialistinformation.specialist}}</h5>
+                <div class="pssbBars"><div class="pssbBar" style="width: 0%;"></div></div>
+            </div>
+            {% endfor %}
+            <div class="pssBox" data-count="92">
+                <div class="pssbCount">92.</div>
+                <h5>Frontend Development</h5>
+                <div class="pssbBars"><div class="pssbBar gr2" style="width: 0%;"></div></div>
+            </div>
+            <div class="pssBox" data-count="71">
+                <div class="pssbCount">71.</div>
+                <h5>Illustration</h5>
+                <div class="pssbBars"><div class="pssbBar gr3" style="width: 0%;"></div></div>
+            </div>
+        </div>
+        <div class="psFooter">
+            <a href="javascript:void(0);" class="btt_btn only_icon btt_reverse"><span><i class="icon icon-DownloadCloud"></i></span></a>
+            <a href="{% url 'contact' %}" class="btt_btn"><span><i class="icon icon-Bag"></i> Hire Me</span></a>
+        </div>
+    </div>
+    
+</div>
